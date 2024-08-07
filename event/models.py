@@ -1,6 +1,7 @@
 from django.db import models
 from django_ckeditor_5.fields import CKEditor5Field
 from AWSUser.models import User
+from teams.models import AWSTeams
 class EventSystem(models.Model):
     title=models.TextField(help_text="Event title")
     description=models.TextField(help_text="Event Description")
@@ -58,6 +59,7 @@ class GrandEventSystem(models.Model):
     facilitator=models.CharField(max_length=400,help_text="Event facilitator")
     detail=CKEditor5Field('Text',config_name='extends')
     event_sponsers=models.ManyToManyField('MerchantSponsers',related_name="sponsers" ,help_text="Sponsers for the event")
+    responsible_teams=models.ManyToManyField(AWSTeams,related_name="teams",help_text="Responsible teams for the events")
     EventStatus = models.CharField(max_length=20, choices=[
         ('Ongoing', 'Ongoing'),
         ('Completed', 'Completed')

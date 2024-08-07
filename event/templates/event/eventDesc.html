@@ -28,6 +28,7 @@
                         <p>{{ event.description }}</p>
                     </header>
                     <div class="bg-transparent">{{event.detail|safe}}</div>
+                    {% if event.EventStatus == 'Planned' or event.EventStatus == 'Ongoing' %}
                     <form method="post" class="mt-2" action="{% url 'event:EventDetail' event.id %}">
                         {% csrf_token %}
                         {% if not request.user.is_authenticated %}
@@ -37,6 +38,7 @@
                         {% endif %}
                         <button class="btn bg-purple-600 inline-flex items-center justify-center px-10 py-3 text-base font-extrabold text-center text-white rounded-lg hover:bg-gradient-to-r from-purple-500 via-purple-600 to-purple-700 focus:ring-4 focus:outline-none focus:ring-purple-300 dark:focus:ring-purple-800 mt-4" type="submit">Participate</button>
                     </form>
+                    {% endif %}
                 </article>
             </div>
           </main>
