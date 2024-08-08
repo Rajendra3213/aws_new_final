@@ -1,6 +1,8 @@
 {% extends "base.html" %}
+{% block title %}AWS Cloud Club Nepal{% endblock %}
 {% load static %}
 {% block content %}
+
 <!-- main-section -->
 <section class="lg:py-16">
     <div class="grid max-w-screen-xl px-4 py-8 mx-auto lg:gap-8 xl:gap-0 lg:py-16 lg:grid-cols-12">
@@ -68,13 +70,8 @@
             <div id="countDown"
                 class="flex gap-8 text-center [&>*>h2]:text-xl [&>*>h2]:sm:text-4xl [&>*>h2]:font-bold [&>*>p]:text-sm [&>*>p]:font-semibold">
                 <div>
-                    <h2 id="month" class="text-emerald-600">{{ grand_event.startDate|date:"m" }}</h2>
-                    <p>Month</p>
-                </div>
-
-                <div>
                     <h2 id="day">{{ grand_event.startDate|date:"d" }}</h2>
-                    <p>days</p>
+                    <p>Days</p>
                 </div>
 
                 <div>
@@ -83,19 +80,19 @@
                 </div>
                 <div>
                     <h2 id="minute">{{ grand_event.startDate|date:"i" }}</h2>
-                    <p>Minute</p>
+                    <p>Minutes</p>
                 </div>
                 <div>
                     <h2 id="second">{{ grand_event.startDate|date:"s" }}</h2>
-                    <p>Second</p>
+                    <p>Seconds</p>
                 </div>
             </div>
             <p id="eventToday" class='mt-2 font-bold text-4xl'></p>
         </div>
         <div class="flex flex-col mb-8 lg:mb-16 space-y-4 sm:flex-row sm:justify-center sm:space-y-0 sm:space-x-4">
             <a href="{% url 'event:GrandEvent' grand_event.id %}"
-                class="mt-10 border border-white sm:mx-5 justify-center items-center py-3 px-5 text-base font-medium text-center text-white rounded-lg bg-primary-700 hover:bg-primary-800 focus:ring-4 focus:ring-primary-300 dark:focus:ring-primary-900">
-                Learn more </a>
+                class="mt-10 px-16 border border-white bg-purple-600 sm:mx-5 justify-center items-center py-5 text-base font-medium text-center text-white rounded-lg bg-primary-700 hover:bg-primary-800 focus:ring-4 focus:ring-primary-300 dark:focus:ring-primary-900">
+                Learn more</a>
         </div>
 
         {% else %}
@@ -182,32 +179,30 @@
 </div>
 {% endblock %}
 {% block scripts %}
-<script>
+ <script>
     var countDownDate = {{grand_event.startDate|date:"U"}} * 1000;
-const monthsElement = document.getElementById('month');
-const daysElement = document.getElementById('day');
-const hoursElement = document.getElementById('hour');
-const minutesElement = document.getElementById('minute');
-const secondsElement = document.getElementById('second');
-var x = setInterval(function () {
-    let today = new Date().getTime();
-    let interval = countDownDate - today;
-    let months = Math.floor(interval / (1000 * 60 * 60 * 24 * 30.4375)); // Use 30.4375 days per month
-    let days = Math.floor(interval / (1000 * 60 * 60 * 24)) % 30.4375; // Use modulo to get the remaining days
-    let hours = Math.floor((interval % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
-    let minutes = Math.floor((interval % (1000 * 60 * 60)) / (1000 * 60));
-    let seconds = Math.floor((interval % (1000 * 60)) / 1000);
-    
-    monthsElement.innerHTML = Math.floor(months);
-    daysElement.innerHTML = Math.floor(days);
-    hoursElement.innerHTML = hours;
-    minutesElement.innerHTML = minutes;
-    secondsElement.innerHTML = seconds;
-    if (interval < 0) {
-        clearInterval(x);
-        document.getElementById("eventToday").innerHTML = "Event Happening Today!!!";
-        document.getElementById("countDown").style.display = "none";
-    }
-}, 1000);
+    const daysElement = document.getElementById('day');
+    const hoursElement = document.getElementById('hour');
+    const minutesElement = document.getElementById('minute');
+    const secondsElement = document.getElementById('second');
+    var x = setInterval(function () {
+        let today = new Date().getTime();
+        let interval = countDownDate - today;
+        let days = Math.floor(interval / (1000 * 60 * 60 * 24)); // Calculate days
+        let hours = Math.floor((interval % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+        let minutes = Math.floor((interval % (1000 * 60 * 60)) / (1000 * 60));
+        let seconds = Math.floor((interval % (1000 * 60)) / 1000);
+
+        daysElement.innerHTML = days;
+        hoursElement.innerHTML = hours;
+        minutesElement.innerHTML = minutes;
+        secondsElement.innerHTML = seconds;
+        if (interval < 0) {
+            clearInterval(x);
+            document.getElementById("eventToday").innerHTML = "Event Happening Today!!!";
+            document.getElementById("countDown").style.display = "none";
+        }
+    }, 1000);
 </script>
+
 {% endblock %}
